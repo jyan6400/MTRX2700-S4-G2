@@ -16,7 +16,7 @@
 main:
     @ Branch with link to set the clocks for the I/O and UART
     BL enable_peripheral_clocks
-    
+
     @ Once the clocks are started, need to initialise the discovery board I/O
     BL initialise_discovery_board
 
@@ -46,20 +46,20 @@ turn_on:
     ORR R4, #1   @ Keep previous LEDs on
 
     CMP R4, #0b11111111 @ Check if all LEDs are on
-    BNE wait_release @ If not all on continue
+    BNE released @ If not all on continue
     MOV R5, #0  @ If all on switch to turning off
-    B wait_release
+    B released
 
 turn_off:
     LSR R4, #1   @ Shift right to turn off the last LED
 
     CMP R4, #0 @ Check if all LEDs are off
-    BNE wait_release @ If not all off continue
+    BNE released @ If not all off continue
     MOV R5, #1  @ If all of switch to turning on
 
 released:
     LDRB R1, [R0, #IDR]@ load the lowest byte from the input data register port A
     ANDS R1, #0x01 @ Look only at bit 0 (input value of PA0)
-    BNE wait_release  @ loop until button is unpressed
+    BNE released  @ loop until button is unpressed
 
     B program_loop
