@@ -39,11 +39,11 @@ program_loop:
 pressed:
     @ If all LEDs are off, turn on the first LED
     CMP R4, #0
-    BNE shift_leds    @ If R4 is NOT zero, continue shifting LEDs
+    BNE change_leds    @ If R4 is NOT zero, continue shifting LEDs
     LDR R4, =0b00000001  @ If R4 is zero, start with the first LED
     B released
 
-shift_leds:
+change_leds:
     LSL R5, R4, #1  @ Shift left to turn on the next LED
     ORR R4, R4, R5  @ Keep previous LEDs on
 
