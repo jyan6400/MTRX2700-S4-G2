@@ -21,7 +21,7 @@ main:
     BL initialise_discovery_board
 
     @ Start with a single LED on
-    LDR R4, =0b00000001
+    LDR R4, =0b00000000
 
 program_loop:
     @ Load GPIOE register address
@@ -37,14 +37,20 @@ program_loop:
     B program_loop    @ Repeat loop
 
 pressed:
-    @ Shift left to add the next LED while keeping previous LEDs on
-    LSL R5, R4, #1
-    ORR R4, R4, R5
+    @ If all LEDs are off, turn on the first LED
+    CMP R4, #0
+    BNE shift_leds    @ If R4 is NOT zero, continue shifting LEDs
+    LDR R4, =0b00000001  @ If R4 is zero, start with the first LED
+    B released
 
-    @ If all LEDs are on (0xFF), reset back to 1 LED
-    CMP R4, #0x100
-    BLO released   @ If R4 < 0x100, continue normally
-    LDR R4, =0b00000001  @ Reset to 1 LED if all are on
+shift_leds:
+    LSL R5, R4, #1  @ Shift left to turn on the next LED
+    ORR R4, R4, R5  @ Keep previous LEDs on
+
+    @ If all LEDs are on reset to 0 LEDs
+    CMP R4, #0x100 @ All LEDs on (0b11111111) corresponds to 255 in binary, therefore check if current state is above that
+    BLO released   @ If R4 < 0x100, continue
+    LDR R4, =0b00000000  @ Reset to all LEDs off
 
 released:
     @ Wait for button to be released
