@@ -44,8 +44,8 @@ pressed:
     B released
 
 change_leds:
-    LSL R5, R4, #1  @ Shift left to turn on the next LED
-    ORR R4, R4, R5  @ Keep previous LEDs on
+    LSL R4, #1  @ Shift left to turn on the next LED
+    ORR R4, #1  @ Keep previous LEDs on
 
     @ If all LEDs are on reset to 0 LEDs
     CMP R4, #0x100 @ All LEDs on (0b11111111) corresponds to 255 in binary, therefore check if current state is above that
