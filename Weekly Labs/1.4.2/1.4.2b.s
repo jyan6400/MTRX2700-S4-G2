@@ -2,6 +2,7 @@
 .thumb
 
 #include "initialise.s"
+#include "definitions.s"
 
 .global main
 
