@@ -7,8 +7,8 @@
 .data
 @ define variables
 
-string_buffer: .asciz "replace this text replace this text" @ Define a store string
-ascii_string: .asciz "Hello [] World!" @ Define a import string
+convert_string: .asciz "replace this text replace this text" @ Define a store string
+input_string: .asciz "Hello [] World!" @ Define a input string
 
 
 .text
@@ -16,13 +16,13 @@ ascii_string: .asciz "Hello [] World!" @ Define a import string
 @ this is the entry function called from the startup file
 main:
 
-	LDR R0, =ascii_string  @ the address of the string
-	LDR R1, =string_buffer  @ the address of the string stored
+	LDR R0, =input_string  @ the address of the string
+	LDR R1, =convert_string  @ the address of the string stored
 	LDR R3, =0x00 	@ counter to the current place in the string
 	MOV R2, #1      @if R2=1 upperconver, R2=0 lowerconver
-    BL letters_conversion
+    BL letters_convertion
 
-letters_conversion:
+letters_convertion:
 
     LDRB R4, [R0, R3]   @ loading Ascii string
     CMP R4, #0          @ detect the NULL of the strings
@@ -31,23 +31,23 @@ letters_conversion:
     CMP R4, #65         @ compare the R4 Ascii < 65 (nonalphabetic)
     BLT store           @ if < 65 skip to store
 
-    CMP R4, #122        @ compare the R4 Ascii <= 90 (alphabetic)
-    BLE Conversion      @ if <= 90 skip to Conversion
+    CMP R4, #122        @ compare the R4 Ascii <= 122 (alphabetic)
+    BLE Convertion      @ if <= 122 skip to Convertion
 
     CMP R4, #122        @ compare the R4 Ascii > 122 (nonalphabetic)
     BGT store           @ if > 122 skip to store
 
 
-    Conversion:
+    Convertion:
 
     CMP R2,#1                   @ if R2=1 is true convert Uppercase
-    BEQ Uppercase_conversion    @ skip to Uppercase
+    BEQ Uppercase_convertion    @ skip to Uppercase
 
     CMP R2,#0                   @ if R2=1 is true convert Lowercase
-    BEQ  Lowercase_conversion   @ skip to Lowercase
+    BEQ  Lowercase_convertion   @ skip to Lowercase
 
 
-    Uppercase_conversion:
+    Uppercase_convertion:
 
     CMP R4, #96         @compare the R4 Ascii <= 96
     BLE store           @ if <= 96 skip to store
@@ -56,7 +56,7 @@ letters_conversion:
     B store             @ store strings
 
 
-    Lowercase_conversion:
+    Lowercase_convertion:
 
     CMP R4, #91         @compare the R4 Ascii >= 91
     BGE store           @ if >= 91 skip to store
@@ -72,7 +72,7 @@ letters_conversion:
 
 	ADD R3, #1          @ increment the offset R2
 
-    B letters_conversion
+    B letters_convertion
 
 finished_loop:
 	BX LR  @ loop to the next byte
