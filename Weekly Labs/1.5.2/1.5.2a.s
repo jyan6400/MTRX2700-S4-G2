@@ -11,8 +11,10 @@
 .align
 
 @ Define a string
-tx_string: .asciz "Walnut is a beautiful car\r\n"
-tx_length: .byte 27  @ Keep length if needed
+tx_string: .asciz "string of characters"
+tx_end: .asciz "!"
+
+tx_length: .byte 20  @ Keep length if needed
 
 .text
 @ define text
@@ -43,6 +45,7 @@ transmit:
     LDR R0, =UART
     LDR R3, =tx_string
     LDR R4, =tx_length
+    LDR R7, =tx_end
     LDR R4, [R4]  @ Dereference length variable
 
 
@@ -56,9 +59,16 @@ transmit_loop:
 
     SUBS R4, #1  @ Decrement length counter
     BGT transmit_loop  @ Continue if more characters to send
+    BEQ end
     B released
 
-
+end:
+	LDR R1, [R0, USART_ISR]  @ Load UART status
+    ANDS R1, 1 << UART_TXE   @ Check if TX buffer is empty
+    BEQ end        @ Wait if not ready
+	LDRB R5, [R7]  @ Load next character
+    STRB R5, [R0, USART_TDR]  @ Transmit character
+    B released
 
 
 
