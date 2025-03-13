@@ -12,7 +12,7 @@
 
 @ Define a string
 tx_string: .asciz "string of characters"
-tx_end: .asciz "!"
+tx_end: .asciz "\n"
 
 tx_length: .byte 20  @ Keep length if needed
 
