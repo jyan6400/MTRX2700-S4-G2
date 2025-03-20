@@ -65,26 +65,5 @@ end_read:
     MOV R3, #0  @ Store null terminator
     STRB R3, [R1, R8]  @ Null-terminate the buffer
 
-    BL transmit_buffer  @ Automatically retransmit
-    B read_string  @ Go back to reading input
-
-@ Function to transmit the buffer over UART
-transmit_buffer:
-    LDR R0, =UART
-    LDR R3, =incoming_buffer  @ Load buffer address
-    MOV R4, R8  @ Load buffer length
-
-transmit_loop:
-    LDR R1, [R0, #USART_ISR]  @ Load UART status
-    TST R1, #(1 << UART_TXE)  @ Check if TX buffer is empty
-    BEQ transmit_loop  @ Wait if not ready
-
-    LDRB R5, [R3], #1  @ Load next character from buffer
-    STRB R5, [R0, #USART_TDR]  @ Transmit character
-
-    SUBS R4, R4, #1  @ Decrement length counter
-    BGT transmit_loop  @ Continue if more characters to send
-
-    B read_string  @ Loop back to reading input
-
     B read_string  @ Stay in loop after reading stops
+
