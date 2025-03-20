@@ -65,22 +65,7 @@ end_read:
     MOV R3, #0  @ Store null terminator
     STRB R3, [R1, R8]  @ Null-terminate the buffer
 
-    B pressed  @ Wait for button press to transmit
-
-pressed:
-    LDR R0, =GPIOA
-    LDRB R2, [R0, #0x10]  @ Read button state
-    ANDS R2, R2, #0x01  @ Check if button is pressed (PA0 = 1)
-    BEQ pressed  @ Wait until button is pressed
-
-    BL transmit_buffer  @ Call buffer transmission
-
-released:
-    LDR R0, =GPIOA
-    LDRB R2, [R0, #0x10]  @ Read button state again
-    ANDS R2, R2, #0x01  @ Check if still pressed
-    BNE released  @ Stay here until the button is released
-
+    BL transmit_buffer  @ Automatically retransmit
     B read_string  @ Go back to reading input
 
 @ Function to transmit the buffer over UART
@@ -100,4 +85,4 @@ transmit_loop:
     SUBS R4, R4, #1  @ Decrement length counter
     BGT transmit_loop  @ Continue if more characters to send
 
-    B released  @ Return to button check
+    B read_string  @ Loop back to reading input
