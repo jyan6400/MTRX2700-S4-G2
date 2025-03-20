@@ -26,7 +26,7 @@ main:
     LDRB R7, [R7]  @ Load max buffer size from memory
 
     MOV R8, #0x00  @ Pointer to track buffer position
-    MOV R5, #0x0A  @ Terminating character (newline '\n')
+    MOV R5, #0x21  @ Terminating character ('!')
 
 read_string:
     LDR R0, =UART  @ Base address for UART
@@ -40,7 +40,7 @@ read_string:
 
     LDRB R3, [R0, #USART_RDR]  @ Read the character from UART
 
-    CMP R3, R5  @ Compare with terminating character
+    CMP R3, R5  @ Compare with terminating character '!'
     BEQ end_read  @ If match, exit loop
 
     STRB R3, [R1, R8]  @ Store character in buffer
@@ -86,3 +86,9 @@ transmit_loop:
     BGT transmit_loop  @ Continue if more characters to send
 
     B read_string  @ Loop back to reading input
+
+
+
+
+
+
