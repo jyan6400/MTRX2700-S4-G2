@@ -41,7 +41,7 @@ read_loop:
 check_palindrome:
     LDR R0, =input_buffer
     LDR R5, =buffer_index
-    LDR R4, [R5]           @ Length including '!'
+    LDR R4, [R5]           @ Total length (incl. '!')
     SUB R4, R4, #2         @ Exclude '!' from check
 
     LDR R1, =reversed_buffer
@@ -71,20 +71,14 @@ compare_loop:
     CMP R2, #0x21          @ Stop comparing at '!'
     BEQ is_palindrome
     CMP R2, R3
-    BNE forward_message
+    BNE reset              @ Not a palindrome → discard
     B compare_loop
 
 is_palindrome:
-    @ Light up PE12–PE15
-    LDR R0, =GPIOE
-    LDR R3, [R0, #0x14]
-    ORR R3, R3, #(1 << 12 | 1 << 13 | 1 << 14 | 1 << 15)
-    STR R3, [R0, #0x14]
-
-forward_message:
+    @ ✅ Forward to MCU2
     LDR R4, =input_buffer
     LDR R5, =buffer_index
-    LDR R6, [R5]            @ Total message length
+    LDR R6, [R5]            @ Total length
     MOV R7, #0
 
 send_loop:
@@ -104,5 +98,6 @@ wait_tx_ready:
 
 reset:
     MOV R2, #0
+    LDR R5, =buffer_index
     STR R2, [R5]            @ Reset buffer index
     B read_loop
