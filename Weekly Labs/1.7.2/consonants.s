@@ -10,16 +10,25 @@
 recv_buffer: .space 64
 recv_index:  .word 0
 
+delay_time: .word 500000          @ 1s delay
+hardware_parameter: .word 8        @ 8 MHz multiplier
+
 .text
 
 main:
+    BL enable_timer2_clock
     BL enable_peripheral_clocks
     BL initialise_discovery_board
     BL enable_uart2
 
+    @ Enable Timer2
+    LDR R0, =TIM2
+    MOV R1, #1
+    STR R1, [R0, TIM_CR1]
+
     LDR R4, =recv_buffer
     LDR R5, =recv_index
-    MOV R6, #0x21          @ '!' character
+    MOV R6, #0x21     @ '!' character
 
 read_loop:
     LDR R0, =UART2
@@ -38,39 +47,28 @@ read_loop:
     B read_loop
 
 run_count_program:
-    @ Null-terminate string
+    @ Null-terminate the string
     LDR R3, [R5]
     LDR R0, =recv_buffer
     ADD R0, R0, R3
     MOV R1, #0
     STRB R1, [R0]
 
-    @ Reset index
-    MOV R1, #0         @ not used anymore (vowel)
-    MOV R2, #0         @ consonant counter
-    MOV R5, #0         @ no toggling needed
+    @ Reset variables
+    MOV R1, #0       @ (unused for vowels)
+    MOV R2, #0       @ consonant count
+    MOV R5, #0       @ toggle (unused)
 
     LDR R0, =recv_buffer
     BL count_loop
 
-program_loop:
-    LDR R0, =GPIOE
-    STRB R2, [R0, #0x15]   @ Display consonant count
-    B program_loop
 
-check_button:
-    B program_loop
-
-pressed:
-    B program_loop
-
-released:
-    BX LR
+    B main_loop
 
 count_loop:
     LDRB R3, [R0], #1
     CMP R3, #0
-    BEQ program_loop
+    BEQ done_count
 
     @ Skip vowels
     CMP R3, #'A'
@@ -94,7 +92,7 @@ count_loop:
     CMP R3, #'u'
     BEQ count_loop
 
-    @ Count consonants only
+    @ Count consonants
     CMP R3, #'A'
     BLT count_loop
     CMP R3, #'Z'
@@ -106,5 +104,44 @@ count_loop:
     B count_loop
 
 increment_consonant:
-    ADD R2, #1
+    ADD R2, R2, #1
     B count_loop
+
+done_count:
+	MOV R7, R2       @ Save consonant count into R7 (preserve it)
+    BX LR
+
+@ -------------------------
+main_loop:
+    LDR R1, =delay_time
+    LDR R1, [R1]
+
+    LDR R2, =hardware_parameter
+    LDR R2, [R2]
+
+    MUL R1, R2
+    BL delay
+
+    @ Toggle LEDs showing consonant count from R7
+    LDR R0, =GPIOE
+    LDR R3, [R0, #ODR]
+    EOR R3, R3, R7, LSL #8      @ Toggle bits PE8–PE15
+    STR R3, [R0, #ODR]
+
+    B main_loop
+
+@ -------------------------
+delay:
+    @ Reset Timer2 counter
+    LDR R0, =TIM2
+    MOV R4, #0
+    STR R4, [R0, TIM_CNT]
+
+Counter:
+    LDR R5, [R0, TIM_CNT]
+    CMP R5, R1
+    BGE return_TO_delay
+    B Counter
+
+return_TO_delay:
+    BX LR
