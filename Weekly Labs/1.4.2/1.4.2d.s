@@ -22,16 +22,16 @@ main:
     BL initialise_discovery_board
 
     @ Start with vowels displayed
-    MOV R5, #1  @ Variable to track mode
+    MOV R5, #1  	 @ Variable to track mode
 
     LDR R0, =string  @ Load address of string
-    MOV R1, #0  @ Vowel count
-    MOV R2, #0  @ Consonant count
+    MOV R1, #0  	 @ Vowel count
+    MOV R2, #0  	 @ Consonant count
 
 count_loop:
     LDRB R3, [R0], #1  @ Load a charcter then point to next one
     CMP R3, #0
-    BEQ program_loop  @ Stop once null terminator is reached
+    BEQ program_loop   @ Stop once null terminator is reached
 
     @ Check for vowels
     CMP R3, #'A'
@@ -67,18 +67,18 @@ count_loop:
     B count_loop
 
 increment_vowel:
-    ADD R1, #1 @ Incrementing vowel count by 1
-    B count_loop @ Checking next letter
+    ADD R1, #1 		@ Incrementing vowel count by 1
+    B count_loop 	@ Checking next letter
 
 increment_consonant:
-    ADD R2, #1 @ Incrementing consonant count by 1
-    B count_loop @ Checking next letter
+    ADD R2, #1 		@ Incrementing consonant count by 1
+    B count_loop 	@ Checking next letter
 
 program_loop:
 
     @ Load GPIOE register address
     LDR R0, =GPIOE
-    CMP R5, #1 @ Check if in vowel or consonant mode
+    CMP R5, #1 		@ Check if in vowel or consonant mode
     BEQ display_vowels
     B display_consonants
 
@@ -95,14 +95,14 @@ check_button:
     @ Read the input button state
     LDR R0, =GPIOA
     LDRB R6, [R0, #IDR]  @ Load button state
-    ANDS R6, #0x01  @ We only need to check the first bit for the button
-    BEQ program_loop  @ Keep displaying current state if not pressed
+    ANDS R6, #0x01  	 @ We only need to check the first bit for the button
+    BEQ program_loop  	 @ Keep displaying current state if not pressed
 
-    EOR R5, #1  @ Change between displaying vowels and consonants
+    EOR R5, #1  		 @ Change between displaying vowels and consonants
     B released
 
 released:
     LDRB R6, [R0, #IDR]  @ Read button state again
-    ANDS R6, #0x01  @ Mask bit 0
-    BNE released  @ Wait until button is released
+    ANDS R6, #0x01  	 @ Mask bit 0
+    BNE released  		 @ Wait until button is released
     B program_loop
