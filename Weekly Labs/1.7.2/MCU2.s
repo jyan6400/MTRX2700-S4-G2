@@ -19,7 +19,7 @@ main:
 	@ Enables timer2 for delay
     BL enable_timer2_clock
 
-    @ Branch with link to set the clocks for the I/O and UART
+    @ Setting the peripheral clocks
     BL enable_peripheral_clocks
 
     @Initialising board
