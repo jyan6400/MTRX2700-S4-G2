@@ -24,10 +24,10 @@ main:
 bitmask:
 	@ Bitmask setting LEDs to given pattern (First 4 on)
 	LDR R0, =0b00001111
- 
+
 	@Loading GPIOE into R1
 	LDR R1, =GPIOE
- 
+
 	@ Store bitmask into bits 8-15
-    	STRB R0, [R1, #ODR + 1]
+    STRB R0, [R1, #ODR + 1]
 	BX LR
