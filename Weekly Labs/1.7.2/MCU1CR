@@ -18,7 +18,7 @@ main:
     BL enable_uart2       @ USART2 (to MCU2)
 
 wait_rx:
-	LDR R0, =UART
+    LDR R0, =UART
     LDR R1, [R0, #USART_ISR]
     TST R1, #(1 << UART_RXNE)
     BEQ wait_rx
@@ -44,7 +44,7 @@ check_palindrome:
     MOV R1, #0              @ R1 = start index
 palindrome_loop:
     CMP R1, R4
-    BGE is_palindrome       @ Checked all, palindrome found
+    BGE encode_and_transmit @ Checked all, palindrome found
 
     LDRB R5, [R0, R1]
     LDRB R6, [R0, R4]
@@ -55,27 +55,48 @@ palindrome_loop:
     SUB R4, R4, #1
     B palindrome_loop
 
-is_palindrome:
-    @ Transmit only if palindrome
+encode_and_transmit:
     LDR R4, =input_buffer
     LDR R5, =buffer_index
     LDR R6, [R5]
     MOV R7, #0
 
-send_loop:
+encode_loop:
     CMP R7, R6
     BGE send_cr
 
     LDRB R2, [R4, R7]
-    ADD R7, R7, #1
 
-    LDR R0, =UART2
+    @ Caesar cipher with wrap-around for letters
+    CMP R2, #'a'
+    BLT check_uppercase
+    CMP R2, #'z'
+    BGT check_uppercase
+    ADD R2, R2, #5
+    CMP R2, #'z'
+    BLE wait_tx_ready
+    SUB R2, R2, #26
+    B wait_tx_ready
+
+check_uppercase:
+    CMP R2, #'A'
+    BLT wait_tx_ready
+    CMP R2, #'Z'
+    BGT wait_tx_ready
+    ADD R2, R2, #5
+    CMP R2, #'Z'
+    BLE wait_tx_ready
+    SUB R2, R2, #26
+
 wait_tx_ready:
+	LDR R0, =UART2
     LDR R1, [R0, #USART_ISR]
     TST R1, #(1 << UART_TXE)
     BEQ wait_tx_ready
     STRB R2, [R0, #USART_TDR]
-    B send_loop
+
+    ADD R7, R7, #1
+    B encode_loop
 
 send_cr:
     MOV R2, #0x0D
