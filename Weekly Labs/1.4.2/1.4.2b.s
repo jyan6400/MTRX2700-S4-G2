@@ -12,27 +12,26 @@
 .text
 @ define text
 
-@ This is the entry function called from the C file
 main:
-    @ Branch with link to set the clocks for the I/O and UART
+    @ Enabling clock for GPIOs
     BL enable_peripheral_clocks
 
-    @ Once the clocks are started, need to initialise the discovery board I/O
+    @ Initialising discovery baord
     BL initialise_discovery_board
 
-    @ Start with a single LED on
+    @ Start with a no LEDs on
     LDR R4, =0b00000000
 
 program_loop:
     @ Load GPIOE register address
     LDR R0, =GPIOE
-    STRB R4, [R0, #ODR + 1]  @ Store R4 to ODR (bits 8-15)
+    STRB R4, [R0, #ODR + 1]  @ Store R4 to bits 8-15
 
     @ Read the input button state
     LDR R0, =GPIOA    @ Port for the input button
     LDRB R1, [R0, #IDR]@ load the lowest byte from the input data register port A
     ANDS R1, #0x01    @ Look only at bit 0 (input value of PA0)
-    BNE pressed       @ loop until the button is pressed
+    BNE pressed       @ Loop until the button is pressed
 
     B program_loop    @ Repeat loop
 
@@ -48,9 +47,9 @@ change_leds:
     ORR R4, #1  @ Keep previous LEDs on
 
     @ If all LEDs are on reset to 0 LEDs
-    CMP R4, #0x100 @ All LEDs on (0b11111111) corresponds to 255 in binary, therefore check if current state is above that
-    BLO released   @ If R4 < 0x100, continue
-    LDR R4, =0b00000000  @ Reset to all LEDs off
+    CMP R4, #0b11111111 @ Check if all LEDs are on
+    BLE released   @ If not then continue as normal
+    LDR R4, =0b00000000  @ If all are on then reset to 0 on
 
 released:
     @ Wait for button to be released
