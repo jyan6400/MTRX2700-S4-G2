@@ -40,24 +40,9 @@ read_loop:
     CMP R2, R6
     BEQ run_count_program
 
-    @ Decode character with Caesar cipher (-5) with wrap-around
-    CMP R2, #'a'
-    BLT decode_uppercase
-    CMP R2, #'z'
-    BGT decode_uppercase
+    @ Decode character with Caesar cipher (-5) with wrap-around (lowercase only)
     SUB R2, R2, #5
     CMP R2, #'a'
-    BGE store_char
-    ADD R2, R2, #26
-    B store_char
-
-decode_uppercase:
-    CMP R2, #'A'
-    BLT store_char
-    CMP R2, #'Z'
-    BGT store_char
-    SUB R2, R2, #5
-    CMP R2, #'A'
     BGE store_char
     ADD R2, R2, #26
 
@@ -94,16 +79,6 @@ count_loop:
     CMP R3, #0
     BEQ done_count
 
-    CMP R3, #'A'
-    BEQ increment_vowel
-    CMP R3, #'E'
-    BEQ increment_vowel
-    CMP R3, #'I'
-    BEQ increment_vowel
-    CMP R3, #'O'
-    BEQ increment_vowel
-    CMP R3, #'U'
-    BEQ increment_vowel
     CMP R3, #'a'
     BEQ increment_vowel
     CMP R3, #'e'
@@ -115,10 +90,6 @@ count_loop:
     CMP R3, #'u'
     BEQ increment_vowel
 
-    CMP R3, #'A'
-    BLT count_loop
-    CMP R3, #'Z'
-    BLE increment_consonant
     CMP R3, #'a'
     BLT count_loop
     CMP R3, #'z'
@@ -161,8 +132,6 @@ display_leds:
 
     EOR R5, R5, #1       @ ✅ Toggle mode (after full cycle)
     B main_loop
-
-
 
 @ -------------------------
 delay:
