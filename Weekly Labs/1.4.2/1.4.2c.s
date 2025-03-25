@@ -12,22 +12,23 @@
 .text
 @ define text
 
-@ This is the entry function called from the C file
 main:
-    @ Branch with link to set the clocks for the I/O and UART
+    @ Initialising clocks for GPIOs
     BL enable_peripheral_clocks
 
-    @ Once the clocks are started, need to initialise the discovery board I/O
+    @ Initialising discovery board
     BL initialise_discovery_board
 
     @ Start with no LEDs on
     LDR R4, =0b00000000
+    
     MOV R5, #1  @ Variable to know whether to turn on or off LEDs
 
 program_loop:
     @ Load GPIOE register address
     LDR R0, =GPIOE
-    STRB R4, [R0, #ODR + 1]  @ Store LED pattern in ODR (bits 8-15)
+    STRB R4, [R0, #ODR + 1]  @ Store LED pattern in bits 8-15
+    
     @ Read the input button state
     LDR R0, =GPIOA
     LDRB R1, [R0, #IDR]
