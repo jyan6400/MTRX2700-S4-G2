@@ -7,7 +7,7 @@
 .data
 @ define variables
 
-convert_string: .asciz "replace this text replace this text" @ Define a store string
+convert_string: .space 64 @ Define a store string
 input_string: .asciz "Hello [] World!" @ Define a input string
 
 
