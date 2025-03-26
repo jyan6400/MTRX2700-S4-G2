@@ -1,23 +1,22 @@
 # MTRX2700 Week 4 Lab Meeting Minutes  
-Date: [Insert actual date here]  
-Location: [Lab Room / Zoom]  
-Group Name: [Your Team Name]  
-Repository: https://github.com/[your-org]/MTRX2700-S4-G2  
+Date: 20/03/2025 
+Location: Mechatronics Dry Lab 
+Group Name: S4-G2  
 Minute Taker: Jason Yang
 
 ---
 
-## 1. ✅ Attendance
+## 1. Attendance
 
-| Name           | Present | Repo Access | Notes                        |
-|----------------|---------|-------------|------------------------------|
-| [Name A]       | ✅       | ✅           |                              |
-| [Name B]       | ✅       | ✅           |                              |
-| [Name C]       | ✅       | ✅           |                              |
+| Name           | Present |
+|----------------|---------|
+| Oscar          | ✅     | 
+| Jiaze          | ✅     |
+| Jason          | ✅     | 
 
 ---
 
-## 2. 🎯 Objective of the Week
+## 2. Objective of the Week
 
 - Begin **Exercise 5: Full System Integration**
 - Connect and verify serial interface between two STM32 boards
@@ -28,20 +27,20 @@ Minute Taker: Jason Yang
 
 ---
 
-## 3. 🧩 Progress Summary
+## 3. Progress Summary
 
 | Integration Component                    | Status | Owner     | Notes                                                                 |
 |------------------------------------------|--------|-----------|-----------------------------------------------------------------------|
-| UART bridging between two boards         | ✅     | [Name A]  | Board A ↔ Board B communication working via UART4/5                   |
-| Integration of string input & processing | 🔄     | [Name A]  | Palindrome/cipher logic functional but not fully routed from UART     |
-| LED display of vowel/consonant count     | 🔄     | [Name B]  | LED toggle logic and timer loop set up; testing in progress           |
-| Shared memory coordination               | ✅     | [Name C]  | Correct string pointers defined; tested across modules                |
-| Button trigger for next word             | 🔄     | [Name B]  | Implementation started, needs integration with timer loop             |
+| UART bridging between two boards         | ✅     | Oscar     | Board A ↔ Board B communication working via UART4/5                   |
+| Integration of string input & processing | 🔄     | Oscar     | Palindrome/cipher logic functional but not fully routed from UART     |
+| LED display of vowel/consonant count     | 🔄     | Jiaze     | LED toggle logic and timer loop set up; testing in progress           |
+| Shared memory coordination               | ✅     | Jason     | Correct string pointers defined; tested across modules                |
+| Button trigger for next word             | 🔄     | Jiaze     | Implementation started, needs integration with timer loop             |
 | Initial system testing (combined modules)| 🔄     | All       | Partial test passed, LED logic not fully synced with UART yet         |
 
 ---
 
-## 4. ⚠️ Issues Encountered
+## 4. Issues Encountered
 
 | Issue                                         | Discussion / Resolution                                             |
 |-----------------------------------------------|----------------------------------------------------------------------|
@@ -52,7 +51,7 @@ Minute Taker: Jason Yang
 
 ---
 
-## 5. 📥 Repository Updates
+## 5. Repository Updates
 
 | Folder     | Updates Made                              | Notes                                     |
 |------------|--------------------------------------------|-------------------------------------------|
@@ -62,7 +61,7 @@ Minute Taker: Jason Yang
 
 ---
 
-## 6. ✅ What Works So Far
+## 6. What Works So Far
 
 - UART data successfully transfers from PC → Board A → Board B
 - All standalone modules (cipher, palindrome, timers, LED) function in isolation
@@ -71,31 +70,20 @@ Minute Taker: Jason Yang
 
 ---
 
-## 7. 🔜 Immediate Next Steps
+## 7. Immediate Next Steps (For Meeting before Week 5 Demo)
 
-| Task                                             | Owner     | Deadline      |
-|--------------------------------------------------|-----------|---------------|
-| Complete routing of UART input to logic pipeline | [Name A]  | Before extra meeting |
-| Finalize LED count logic with timer delay        | [Name B]  | Before extra meeting |
-| Debug and complete button reset/loop trigger     | [Name B]  | Before extra meeting |
-| Test full system end-to-end                      | All       | Before Week 5 demo  |
-| Update README and documentation for demo         | [Name C]  | Before Week 5 demo  |
+| Task                                             | Owner     | Deadline             |
+|--------------------------------------------------|-----------|----------------------|
+| Complete routing of UART input to logic pipeline | Oscar     | Before extra meeting |
+| Finalize LED count logic with timer delay        | Jiaze     | Before extra meeting |
+| Debug and complete button reset/loop trigger     | Jiaze     | Before extra meeting |
+| Test full system end-to-end                      | All       | Before Week 5 demo   |
+| Update README and documentation for demo         | Jason     | Before Week 5 demo   |
 
----
-
-## 8. 📆 Scheduled Follow-Up Meeting
-
-We have scheduled an **additional integration session** outside of lab time to complete and test the full project.
-
-| Purpose                 | Final system test, polish, documentation |
-|-------------------------|-------------------------------------------|
-| 📅 Date & Time          | [Insert Agreed Date/Time]                 |
-| 📍 Location             | [Room / Online Link]                      |
-| 🧑‍💻 Attendees Expected | Full team                                 |
 
 ---
 
-## 9. 🧭 Group Reflections
+## 9. Group Reflections
 
 - Team communicated well and clearly divided tasks
 - Early modular design helped isolate and debug logic
@@ -104,6 +92,6 @@ We have scheduled an **additional integration session** outside of lab time to c
 
 ---
 
-**📌 Next Meeting:** Extra integration session before Week 5  
-**📥 Minutes saved in repo as:** `minutes/minutes_Week4.md`
+**Next Meeting:** Extra integration session before Week 5 Lab  
+**Minutes saved in repo as:** `minutes/minutes_20_3.txt`
 
