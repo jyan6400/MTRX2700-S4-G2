@@ -1,1 +1,114 @@
+# MTRX2700 Week 2 Lab Meeting Minutes  
+Date: 06/03/2025  
+Location: Mechatronics Dry Lab  
+Group Name: S4-G2 
+Repository: https://github.com/[your-org]/MTRX2700-S4-G2  
+Minute Taker: Jason Yang
+
+---
+
+## 1. Attendance Check
+
+| Name           | Present | 
+|----------------|---------|
+| Oscar          | ✅       | 
+| Jiaze          | ✅       | 
+| Jason          | ✅       | 
+
+---
+
+## 2. Objectives for Week 2
+
+- Finalise **Exercise 1: Memory and Pointers**
+- Begin and progress through **Exercise 2: Digital I/O**
+- Review and document function interfaces (inputs/outputs)
+- Push updated code to GitHub repo under weekly folders
+- Begin internal code reviews and collaborative testing
+
+---
+
+## 3. Progress Summary
+
+### **Exercise 1: Memory and Pointers**
+| Subtask                      | Status | Owner       | Notes                                                             |
+|-----------------------------|--------|-------------|-------------------------------------------------------------------|
+| 1.3.2a - Upper/Lower convert| ✅     | Oscar    | Uses ASCII value ranges; toggle based on R2                       |
+| 1.3.2b - Palindrome check   | ✅     | Jiaze    | Clean loop with forward/reverse char comparison                   |
+| 1.3.2c - Caesar cipher      | ✅     | Jason    | Supports +/- shift, with character wrapping and bounds checking   |
+
+----> All three functions tested in isolation and integrated into `string_utils.s`.
+
+---
+
+### **Exercise 2: Digital I/O**
+| Subtask                      | Status  | Owner       | Notes                                                                 |
+|-----------------------------|---------|-------------|-----------------------------------------------------------------------|
+| 1.4.2a - Bitmask LED pattern| ✅      | Jiaze    | Bitmask stored in register, mapped to GPIOE ODR                      |
+| 1.4.2b - Button LED toggle  | ✅      | Jiaze    | Debouncing handled with loop delay; toggles LED count                |
+| 1.4.2c - LED on/off state switch | ✅ | Jiaze    | Logic for mode cycling completed                                     |
+| 1.4.2d - Vowel/consonant counter | 🔄 | Oscar    | Partially implemented; planning to integrate with Exercise 1 string input |
+
+----> LEDs working correctly. Button tested for reliability. Integration of vowel/consonant loop planned for next week.
+
+---
+
+## 4. Technical Challenges & Resolutions
+
+| Issue                           | Resolution                                                                 |
+|----------------------------------|----------------------------------------------------------------------------|
+| Button bouncing causing state glitches | Added software delay between state transitions                          |
+| Overwriting original string in Caesar cipher | Used separate memory address for output string                        |
+| Register usage overflow in nested loops | Defined temp registers and cleared unused ones between calls          |
+| GPIO ODR byte alignment issues | Used `[R0, #ODR + 1]` correctly to target bits 8–15 of GPIOE ODR         |
+
+---
+
+## 5. Testing Summary
+
+### Manual test cases created for:
+- ASCII edge characters (e.g., 'a', 'z', 'A', 'Z')
+- Mixed-case palindrome detection
+- Positive/negative Caesar shifts (including wrap-around)
+- LED display of vowel/consonant counts from test strings
+
+### Tools Used:
+- STM32CubeIDE debugger
+- Memory/register viewer
+- Button press test loop
+- LED state snapshotting
+
+---
+
+## 6. Repository Updates
+
+| Folder     | Update Notes                                                   |
+|------------|----------------------------------------------------------------|
+| `1.3.2/`   | All string-related `.s` files committed and commented          |
+| `1.4.2/`   | Bitmask, toggle, and button logic files uploaded               |
+| `README.md`| Updated with descriptions of Exercise 1 and Exercise 2 modules|
+| `minutes/` | `minutes_6_3.txt` added                                       |
+
+---
+
+## 7. Group Reflection
+
+- Members confirmed a good understanding of memory manipulation in assembly.
+- I/O work encouraged deeper appreciation of register-level access and control flow.
+- All members are now comfortable using `STRB`, `LDRB`, memory offsets, and GPIO configuration.
+
+---
+
+## 8. Action Items
+
+| Task                                    | Owner       | Deadline     |
+|-----------------------------------------|-------------|--------------|
+| Complete vowel/consonant LED function   | Oscar       | Before Week 3|
+| Begin serial communication (Exercise 3) | Oscar       | Week 3       |
+| Finalize test cases for Exercise 2      | [All]       | Week 3       |
+| Peer review of string functions         | Jiaze       | Week 3       |
+
+---
+
+**Next Meeting:** Week 3 Lab (13/03/2025)  
+**Minutes saved in repo as:** `minutes/minutes_6_3.txt`
 
