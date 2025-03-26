@@ -1,1 +1,117 @@
+# MTRX2700 Week 3 Lab Meeting Minutes  
+Date: [Insert actual date here]  
+Location: [Lab Room / Zoom]  
+Group Name: [Your Team Name]  
+Repository: https://github.com/[your-org]/MTRX2700-S4-G2  
+Minute Taker: [Name]
+
+---
+
+## 1. Attendance
+
+| Name           | Present | 
+|----------------|---------|
+| Oscar       | ✅       | 
+| Jiaze       | ✅       | 
+| Jason       | ✅       | 
+
+---
+
+## 2. Objectives for Week 3
+
+- Complete **Exercise 3: Serial Communication**
+- Complete **Exercise 4: Hardware Timers**
+- Begin integrating UART I/O with string manipulation and LED display
+- Define and test all function interfaces
+- Ensure polling-based UART and timer systems are stable for integration
+
+---
+
+## 3. Technical Progress
+
+### **Exercise 3: Serial Communication**
+| Task (1.5.2)                              | Status | Owner     | Notes                                                                 |
+|------------------------------------------|--------|-----------|-----------------------------------------------------------------------|
+| a) UART Send Function                     | ✅     | [Name A]  | Transmits char array via UART4 with end character `'#'`              |
+| b) UART Receive Function                  | ✅     | [Name A]  | Polls UART5 and stores received string to memory buffer               |
+| c) Baud Rate + Clock Speed Adjustment     | ✅     | [Name B]  | PLL multiplier & UART divider tuned for 115200 baud                  |
+| d) Echo on Same UART                      | ✅     | [Name A]  | Receives and retransmits on UART4                                    |
+| e) UART Bridge (Port Forwarding)          | ✅     | [Name A]  | USART1 ↔ UART4 forwarding for PC ↔ Board ↔ Board                     |
+
+----> Tested UART bridge between two STM32 boards and a PC using PuTTY terminal.
+
+---
+
+### **Exercise 4: Hardware Timers**
+| Task (1.6.2)                                | Status | Owner     | Notes                                                             |
+|--------------------------------------------|--------|-----------|-------------------------------------------------------------------|
+| a) Delay Function Using TIM2               | ✅     | [Name B]  | Accepts microsecond value in R1; waits until CNT > target         |
+| b) Prescaler Justification & Calculation   | ✅     | [Name C]  | Documented values for 1μs, 1s, 1h. Used for PWM test               |
+| c) ARR Preload Delay                       | ✅     | [Name B]  | TIMx_ARR + ARPE=1 used for accurate 0.1ms delay cycle              |
+| PWM Loop for LED Blink                     | ✅     | [Name B]  | 500ms toggling LED based on vowel/consonant count planned          |
+
+----> Verified timing loop with oscilloscope. Accuracy consistent across test runs.
+
+---
+
+## 4. Key Issues and Solutions
+
+| Issue                            | Resolution                                                             |
+|----------------------------------|------------------------------------------------------------------------|
+| UART not transmitting full string| Ensured terminating character is detected before sending              |
+| Baud mismatch between devices    | Standardized to 115200 baud on both devices, adjusted clock divisor   |
+| Timer not resetting CNT          | Added manual reset `STR R8, [R0, TIM_CNT]` before delay loop          |
+| Button debounce for send trigger| Added ~100ms delay after button press to prevent repeated sends       |
+
+---
+
+## 5. Testing Summary
+
+### Tools Used:
+- STM32CubeIDE UART Monitor
+- PuTTY / minicom (PC → USART1)
+- Oscilloscope for TIM2 validation
+
+### Tests Conducted:
+| Component       | Input                  | Expected Result                          | Outcome |
+|----------------|------------------------|-------------------------------------------|---------|
+| UART Send       | `"Hello#"`             | Sent `"Hello#"` to connected board        | ✅       |
+| UART Receive    | From Board A → B       | Received correct string in buffer         | ✅       |
+| UART Echo       | `"Test123"`            | Echoed same string back                   | ✅       |
+| Timer Delay     | 0.1ms × 10000 loops    | Delay lasted approx. 1 second             | ✅       |
+| PWM LED Toggle  | Fixed on/off period    | LED blinks at 500ms rate                  | ✅       |
+
+---
+
+## 6. Repository Updates
+
+| Folder     | New Files Added                                      | Description                                    |
+|------------|------------------------------------------------------|------------------------------------------------|
+| `1.5.2/`   | `uart_send.s`, `uart_receive.s`, `uart_bridge.s`     | UART communication modules                     |
+| `1.6.2/`   | `delay_timer.s`, `pwm_loop.s`, `initialise.s`        | Timer utilities and PWM                        |
+| `minutes/` | `minutes_13_3.txt`                                   | This meeting minutes file                      |
+
+---
+
+## 7. Group Reflections
+
+- All members now confident in setting up UART and timers using registers and polling
+- Good collaboration during physical UART connection and debugging
+- Team is on track for starting full integration (Exercise 5) next week
+
+---
+
+## 8. Action Items (for Week 4)
+
+| Task                                                   | Owner       | Deadline     |
+|--------------------------------------------------------|-------------|--------------|
+| Start integration project (Exercise 5)                 | All         | Week 4       |
+| Route received UART string to palindrome logic         | Oscar       | Week 4       |
+| Use LED PWM to reflect char category (vowel/consonant) | Jiaze       | Week 4       |
+| Review overall structure and interface design          | Jason       | Week 4       |
+
+---
+
+**Next Meeting:** Week 4 Lab – Integration Focus  
+**Minutes saved in repo as:** `minutes/minutes_13_3.txt`
 
