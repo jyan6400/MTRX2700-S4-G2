@@ -2,7 +2,7 @@
 
 ## Group Information
 
-**Team Number:** [S4-G2]  
+**Team Number:** S4-G2  
 **Unit:** MTRX2700 – Mechatronics 2  
 **Semester:** S1 2025  
 
