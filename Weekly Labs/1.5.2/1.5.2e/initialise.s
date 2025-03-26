@@ -24,7 +24,7 @@ enable_peripheral_clocks:
 @  setting the alternate pin functions for the UART (select the pins you want to use)
 @
 @ BAUD rate needs to change depending on whether it is 8MHz (external clock) or 24MHz (our PLL setting)
-enable_uart:
+enable_usart:
 
 	@make a note about the different ways that we set specific bits in this configuration section
 
@@ -69,7 +69,7 @@ enable_uart:
 
 	BX LR @ return
 
-enable_uart2:
+enable_usart2:
 
 	@make a note about the different ways that we set specific bits in this configuration section
 
