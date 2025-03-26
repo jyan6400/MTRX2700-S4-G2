@@ -1,1 +1,109 @@
+# MTRX2700 Week 4 Lab Meeting Minutes  
+Date: [Insert actual date here]  
+Location: [Lab Room / Zoom]  
+Group Name: [Your Team Name]  
+Repository: https://github.com/[your-org]/MTRX2700-S4-G2  
+Minute Taker: Jason Yang
+
+---
+
+## 1. ✅ Attendance
+
+| Name           | Present | Repo Access | Notes                        |
+|----------------|---------|-------------|------------------------------|
+| [Name A]       | ✅       | ✅           |                              |
+| [Name B]       | ✅       | ✅           |                              |
+| [Name C]       | ✅       | ✅           |                              |
+
+---
+
+## 2. 🎯 Objective of the Week
+
+- Begin **Exercise 5: Full System Integration**
+- Connect and verify serial interface between two STM32 boards
+- Route received string through processing pipeline:
+  - Palindrome check
+  - Caesar cipher (if required)
+  - Vowel/consonant count → LED output with timer-based delays
+
+---
+
+## 3. 🧩 Progress Summary
+
+| Integration Component                    | Status | Owner     | Notes                                                                 |
+|------------------------------------------|--------|-----------|-----------------------------------------------------------------------|
+| UART bridging between two boards         | ✅     | [Name A]  | Board A ↔ Board B communication working via UART4/5                   |
+| Integration of string input & processing | 🔄     | [Name A]  | Palindrome/cipher logic functional but not fully routed from UART     |
+| LED display of vowel/consonant count     | 🔄     | [Name B]  | LED toggle logic and timer loop set up; testing in progress           |
+| Shared memory coordination               | ✅     | [Name C]  | Correct string pointers defined; tested across modules                |
+| Button trigger for next word             | 🔄     | [Name B]  | Implementation started, needs integration with timer loop             |
+| Initial system testing (combined modules)| 🔄     | All       | Partial test passed, LED logic not fully synced with UART yet         |
+
+---
+
+## 4. ⚠️ Issues Encountered
+
+| Issue                                         | Discussion / Resolution                                             |
+|-----------------------------------------------|----------------------------------------------------------------------|
+| Multiple modules accessing same memory        | Separated buffer space and clarified register handoff strategy      |
+| LED PWM blinking overlaps with UART receive   | Will stagger UART read + LED update with software handshaking       |
+| Button not triggering repeat loop properly    | Suspect debounce or flag logic issue; to debug in next session      |
+| Presentation date too early for full polish   | Scheduled **extra meeting before Week 5 demo** to complete testing  |
+
+---
+
+## 5. 📥 Repository Updates
+
+| Folder     | Updates Made                              | Notes                                     |
+|------------|--------------------------------------------|-------------------------------------------|
+| `1.7.2/`   | `integration_main.s` created               | Core integration file with shared functions |
+| `1.3.2/`, `1.4.2/`, `1.6.2/` | Updated and imported modules        | Modular design used for import and linking |
+| `minutes/` | `minutes_Week4.md` added                   | This meeting record                        |
+
+---
+
+## 6. ✅ What Works So Far
+
+- UART data successfully transfers from PC → Board A → Board B
+- All standalone modules (cipher, palindrome, timers, LED) function in isolation
+- Repository and folder structure confirmed clean and modular
+- All team members aligned on task dependencies and interfaces
+
+---
+
+## 7. 🔜 Immediate Next Steps
+
+| Task                                             | Owner     | Deadline      |
+|--------------------------------------------------|-----------|---------------|
+| Complete routing of UART input to logic pipeline | [Name A]  | Before extra meeting |
+| Finalize LED count logic with timer delay        | [Name B]  | Before extra meeting |
+| Debug and complete button reset/loop trigger     | [Name B]  | Before extra meeting |
+| Test full system end-to-end                      | All       | Before Week 5 demo  |
+| Update README and documentation for demo         | [Name C]  | Before Week 5 demo  |
+
+---
+
+## 8. 📆 Scheduled Follow-Up Meeting
+
+We have scheduled an **additional integration session** outside of lab time to complete and test the full project.
+
+| Purpose                 | Final system test, polish, documentation |
+|-------------------------|-------------------------------------------|
+| 📅 Date & Time          | [Insert Agreed Date/Time]                 |
+| 📍 Location             | [Room / Online Link]                      |
+| 🧑‍💻 Attendees Expected | Full team                                 |
+
+---
+
+## 9. 🧭 Group Reflections
+
+- Team communicated well and clearly divided tasks
+- Early modular design helped isolate and debug logic
+- Time constraints meant integration couldn’t be finalized in one session
+- Confident all core logic will be complete before Week 5 presentation
+
+---
+
+**📌 Next Meeting:** Extra integration session before Week 5  
+**📥 Minutes saved in repo as:** `minutes/minutes_Week4.md`
 
