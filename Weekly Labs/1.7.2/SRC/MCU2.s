@@ -10,9 +10,6 @@
 recv_buffer: .space 64
 recv_index:  .word 0
 
-delay_time: .word 500000          @ 0.5s delay
-hardware_parameter: .word 8       @ 8 MHz multiplier
-
 .text
 
 main:
@@ -29,9 +26,13 @@ main:
     BL enable_usart2
 
     @ Setting up TIM2
-    LDR R0, =TIM2
-    MOV R1, #1
-    STR R1, [R0, TIM_CR1] @ Enabling counter
+	LDR R0, =TIM2
+	MOV R1, #0b10000001              @ Enabling clock and ARPE
+	STR R1, [R0, TIM_CR1]
+
+	LDR R0, =TIM2
+	MOV R1, #799               @ Prescaler value to set 0.1ms intervals
+	STR R1, [R0, TIM_PSC]
 
     LDR R4, =recv_buffer  @ Buffer to recive charcters
     LDR R5, =recv_index   @ Current index of received string
@@ -47,13 +48,13 @@ read_loop:
 
     LDRB R2, [R0, #USART_RDR] @ Loads the current charcter into R2
     CMP R2, R6                @ Check for end of transmission
-    BEQ initialise_count     @ If it's the end then continue with program
+    BEQ initialise_count      @ If it's the end then continue with program
 
     @ Caesar cypher decoding
-    SUB R2, #5     @ Decode 5 characters
+    SUB R2, #5       @ Decode 5 characters
     CMP R2, #'a'
     BGE store_letter @ Checks if the charcter is now out of alphabet range
-    ADD R2, #26    @ Loops back if it is
+    ADD R2, #26      @ Loops back if it is
 
 store_letter:
     LDR R3, [R5]      @ Loads index position
@@ -96,7 +97,7 @@ count_loop:
 
 	@ If not a vowel check if it's within range of a-z
     CMP R3, #'a'
-    BLT count_loop @ If not then continuing counting
+    BLT count_loop 			@ If not then continuing counting
     CMP R3, #'z'
     BLE increase_consonants @ If it is then increment consonant count
     B count_loop
@@ -126,32 +127,30 @@ display_consonants:
 
 display_leds:
     LDR R0, =GPIOE
-    STRB R3, [R0, #ODR+1]   @ Turn on LEDs to show number of consonants/vowels
-    BL delay 				@ Trigger 500ms delay
+    STRB R3, [R0, #ODR+1]
+	BL timer_delay			 @ Trigger delay
 
-    MOV R3, #0
-    STRB R3, [R0, #ODR+1]   @ Turn off LEDs
-    BL delay 				@ Trigger 500ms delay
+	EOR R5, #1				 @ Toggle consonant or vowel mode
+	B display_mode
 
-    EOR R5, #1       @ Change to show either vowels/consonants now
-    B display_mode 		 @ Repeat loop infinitely
-
-delay:
-    LDR R0, =delay_time 		 @ Loading delay time of 500ms
-    LDR R1, [R0]				 @ Storing this into R1
-
-    LDR R0, =hardware_parameter  @ Loading the frequency of the clock
-    LDR R2, [R0] 				 @ Storing this into R2
-
-    MUL R1, R2 					 @ Calculating how many clock cycles to wait
-
+timer_delay:
     LDR R0, =TIM2
-    MOV R4, #0
-    STR R4, [R0, TIM_CNT] @ Resetting timer counter to 0
+    MOV R1, #5000            @ Creates 500ms delay
+    STR R1, [R0, TIM_ARR]    @ Store into auto-reload register
 
-delay_check:
-    LDR R8, [R0, TIM_CNT] @ Store current timer count
-    CMP R8, R1			  @ Check if we have completed enough cycles
-    BLT delay_check	      @ Loop if delay is not finished
+    MOV R2, #1
+    STR R2, [R0, #0x14]      @ Enable update generation in event generation register
 
-    BX LR		  		  @ Finish delay once cycles have been reached
+    MOV R2, #0
+    STR R2, [R0, TIM_CNT]    @ Reset counter
+    STR R2, [R0, TIM_SR]     @ Clearing update interrupt flag
+
+wait_loop:
+    LDR R2, [R0, TIM_SR]
+    TST R2, #1               @ Checking update interrupt flag
+    BEQ wait_loop            @ Wait for counter overflow
+
+    MOV R2, #0
+    STR R2, [R0, TIM_SR]     @ Clear update interrupt again
+
+    BX LR                    @ Return
