@@ -12,7 +12,7 @@
 |----------------|------------------------------|----------------------------------------------------------------------------------|
 | Oscar          | Systems & Comms Lead         | String manipulation, UART communication, integration of input/output logic      |
 | Jiaze          | I/O & Control Lead           | LED bitmasking, button interfacing, timer configuration, PWM and delays         |
-| Jason          | DevOps & Architecture Lead   | Repository structure, documentation, Git integration, assembly debugging support|
+| Jason          | DevOps & Architecture Lead   | Repository structure, documentation, Git integration, assembly debugging support, Meeting Minutes|
 
 ---
 
