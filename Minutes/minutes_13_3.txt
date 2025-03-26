@@ -1,9 +1,8 @@
 # MTRX2700 Week 3 Lab Meeting Minutes  
-Date: [Insert actual date here]  
-Location: [Lab Room / Zoom]  
-Group Name: [Your Team Name]  
-Repository: https://github.com/[your-org]/MTRX2700-S4-G2  
-Minute Taker: [Name]
+Date: 13/03/2025  
+Location: Mechatronics Dry Lab  
+Group Number: S4-G2    
+Minute Taker: Jason Yang
 
 ---
 
