@@ -1,9 +1,9 @@
 # MTRX2700 Week 1 Lab Meeting Minutes  
-Date: [27/02/2025]  
-Location: [Mechatronics Dry Lab]  
-Group Number: [S4-G2]  
+Date: 27/02/2025  
+Location: Mechatronics Dry Lab  
+Group Number: S4-G2  
 Repository: https://github.com/jyan6400/MTRX2700-S4-G2.git  
-Minute Taker: [Jason Yang]
+Minute Taker: Jason Yang
 
 ---
 
