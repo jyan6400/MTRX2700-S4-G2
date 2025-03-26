@@ -78,7 +78,7 @@ check_palindrome:
     BGE encode_initialise
 
 @ Skip non-letter characters from left pointer
-skip_left:
+check_left:
     LDRB R5, [R4, R1]
     CMP R5, #'a'
     BLT increase_left				@ If it is not a letter then increment the left pointer
@@ -89,7 +89,7 @@ increase_left:
     ADD R1, #1					@ Increase left pointer
     CMP R1, R6
     BGT encode_initialise		@ If pointers have met then must be a palindrome
-    B skip_left
+    B check_left
 
 @ Skip non-letter characters from the right pointer
 check_right:
