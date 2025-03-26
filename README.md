@@ -1,12 +1,12 @@
-# 🛠️ MTRX2700 ASM Lab Project – Group G2
+# MTRX2700 ASM Lab Project – Group G2
 
-## 👥 Group Information
+## Group Information
 
 **Team Number:** [S4-G2]  
 **Unit:** MTRX2700 – Mechatronics 2  
 **Semester:** S1 2025  
 
-### 👤 Group Members & Roles
+### Group Members & Roles
 
 | Name           | Role                         | Responsibilities                                                                 |
 |----------------|------------------------------|----------------------------------------------------------------------------------|
@@ -16,7 +16,7 @@
 
 ---
 
-## 🔧 Project Description
+## Project Description
 
 This project is a series of embedded system modules programmed in **ARM Assembly** for the **STM32F3 Discovery Board**. It was completed over Weeks 1–5 as part of the MTRX2700 ASM Lab Series.
 
@@ -29,7 +29,7 @@ The goal is to demonstrate modular, low-level embedded development using:
 
 ---
 
-## 📦 Project Structure
+## Project Structure
 
 The repo is structured by **lab week and exercise number**, as per the official lab manual.
 
@@ -65,9 +65,9 @@ The repo is structured by **lab week and exercise number**, as per the official 
 
 ---
 
-## 🚀 Program Overview
+## Program Overview
 
-### 🔹 Functionality:
+### Functionality:
 The project processes a user-provided string and:
 1. Checks if it is a **palindrome**
 2. If it is, applies a **Caesar cipher**
@@ -76,7 +76,7 @@ The project processes a user-provided string and:
    - Counts the **vowels and consonants**
    - Blinks **LEDs accordingly** with a 500ms delay between each character group
 
-### 🔹 Modules:
+### Modules:
 | Module        | Description                                                                 |
 |---------------|-----------------------------------------------------------------------------|
 | `string_utils`| Handles character case conversion, palindrome check, and Caesar encryption |
@@ -87,15 +87,15 @@ The project processes a user-provided string and:
 
 ---
 
-## 📥 Instructions for Use
+## Instructions for Use
 
-### 🔧 Requirements:
+### Requirements:
 - STM32CubeIDE (v1.12+)
 - STM32F3 Discovery Board
 - Micro-USB cable
 - Jumper wires (for UART connection between boards)
 
-### 🔄 Build & Flash:
+### Build & Flash:
 1. Clone the repo and open with STM32CubeIDE:
    ```bash
    git clone https://github.com/[your-org]/MTRX2700-S4-G2.git
