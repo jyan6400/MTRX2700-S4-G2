@@ -9,7 +9,7 @@
 | Jason         | Architecture & DevOps Lead   | Assembly foundations, repository structure, build configuration, documentation, testing & QA, Meeting Minutes |
 
 
-
+## 📁 Project Structure
 /Weekly Labs/
 ├── 1.3.2/           # String manipulation functions
 │   └── 1.3.2a.s     # Uppercase/lowercase conversion
