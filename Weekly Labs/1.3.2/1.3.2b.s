@@ -3,65 +3,57 @@
 
 .global main
 
+#include "initialise.s"
 
 .data
-@ define variables
-
-string_buffer: .asciz "Replace this text\0"
-ascii_string: .asciz "racecar\0" @ Define a null-terminated string
-byte_array: .byte 0, 1, 2, 3, 4, 5, 6
-word_array: .word 0x00, 0x40, 0x80, 0xc0, 0x10, 0x14, 0xffffffff
-
+ascii_string: .asciz "racecar"     @ Input string
 
 .text
-@ define text
-
-
-@ this is the entry function called from the startup file
 main:
+    BL enable_peripheral_clocks
+    BL initialise_discovery_board
 
-	LDR R0, =ascii_string  @ the address of the string
-	LDR R1, =string_buffer  @ the address of the string
-	LDR R4, =0x00
-	LDR R5, =0x00
+    LDR R0, =ascii_string     @ Pointer to string
+    MOV R1, R0                @ Copy of string for palindrome check
+    MOV R2, #0                @ Length counter
 
+@ Find string length
 find_length:
-	LDRB R3, [R0, R4]	@ load the byte from the ascii_string (byte number R2)
-	CMP R3, #0	@ Test to see whether this byte is zero (for null terminated)
-	BEQ string_loop
-	ADD R4, #1  @ increment the offset R2
-	B find_length
+    LDRB R3, [R1, R2]
+    CMP R3, #0				  @ Checking for null terminator
+    BEQ check_palindrome
+    ADD R2, #1				  @ Increasing length
+    B find_length
 
-string_loop:
-	SUB R4, #1  @ increment the offset R2
-	LDRB R3, [R0, R4]	@ load the byte from the ascii_string (byte number R2)
-	STRB R3, [R1, R5]	@ store the byte in the string_buffer (byte number R2)
-	ADD R5, #1
-	CMP R4, #-1
-	BEQ finished_strings
-	B string_loop  @ loop to the next byte
-
-finished_strings:
-    MOV R3, #0              @ Null terminator
-    STRB R3, [R1, R5]       @ Add null terminator at the end
-
-palindrome:
-    LDR R0, =ascii_string      @ Load address of original string
-    LDR R1, =string_buffer     @ Load address of reversed string
+check_palindrome:
+    SUB R2, #1                @ Right pointer
+    MOV R3, #0                @ Left pointer
 
 compare_loop:
-    LDRB R3, [R0], #1          @ Load and increment ascii_string pointer
-    LDRB R4, [R1], #1         @ Load and increment string_buffer pointer
-    CMP R3, #0                 @ Check if null terminator (end of string)
-    BEQ yes                    @ If both are identical, it's a palindrome
-    CMP R3, R4                 @ Compare characters
-    BNE no                     @ If different, not a palindrome
-    B compare_loop             @ Continue checking next character
+    CMP R3, R2
+    BGE is_palindrome         @ If the pointers have met and no disprencies, must be palindrome
 
-yes:
-    MOV R6, #1                 @ Store 1 in R6 if palindrome
-    BX LR                      @ Return
+    LDRB R4, [R0, R3]         @ Load left pointer character
+    LDRB R5, [R0, R2]         @ Load right pointer character
+    CMP R4, R5
+    
+    BNE not_palindrome        @ If they are not equal it is not a palindrome
 
-no:
+	@ Increment pointers and keep comparing
+    ADD R3, R3, #1
+    SUB R2, R2, #1
+    B compare_loop
+
+is_palindrome:
+    LDR R6, =GPIOE
+    MOV R7, #0b10001000       @ Light green LEDs for palindrome
+    STRB R7, [R6, #ODR+1]
+    BX LR
+
+not_palindrome:
+    LDR R6, =GPIOE
+    MOV R7, #0b00100010       @ Light red LEDs for not palindrome
+    STRB R7, [R6, #ODR+1]
+    BX LR
     MOV R6, #0                 @ Store 0 in R6 if not palindrome
     BX LR                      @ Return
