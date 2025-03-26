@@ -1,9 +1,9 @@
-# 📝 MTRX2700 Week 1 Lab Meeting Minutes  
-📅 Date: [27/02/2025]  
-📍 Location: [Mechatronics Dry Lab]  
-👥 Group Number: [S4-G2]  
-📂 Repository: https://github.com/jyan6400/MTRX2700-S4-G2.git  
-🧾 Minute Taker: [Jason Yang]
+# MTRX2700 Week 1 Lab Meeting Minutes  
+Date: [27/02/2025]  
+Location: [Mechatronics Dry Lab]  
+Group Number: [S4-G2]  
+Repository: https://github.com/jyan6400/MTRX2700-S4-G2.git  
+Minute Taker: [Jason Yang]
 
 ---
 
@@ -17,7 +17,7 @@
 
 ---
 
-## 2. 🎯 Meeting Objectives
+## 2. Meeting Objectives
 - Familiarise ourselves with the STM32CubeIDE and STM32F3 Discovery board.
 - Set up GitHub repository and group collaboration tools.
 - Assign roles and responsibilities using the MECE framework.
@@ -26,7 +26,7 @@
 
 ---
 
-## 3. 🔧 Technical Setup Summary
+## 3. Technical Setup Summary
 
 | Setup Task                            | Status | Notes                                  |
 |--------------------------------------|--------|----------------------------------------|
@@ -41,7 +41,7 @@
 
 ---
 
-## 4. 👨‍💻 Roles & Responsibilities (MECE)
+## 4. Roles & Responsibilities (MECE)
 
 | Member       | Role                        | Responsibilities                                                                 |
 |--------------|-----------------------------|----------------------------------------------------------------------------------|
@@ -51,7 +51,7 @@
      
 ---
 
-## 5. 📘 Reference Material Allocation
+## 5. Reference Material Allocation
 
 Each member selected one document from Canvas (e.g., STM32F3 datasheet, STM32 HAL guide, ARM Cortex-M4 ISA) to review and report back in Week 2 on:
 - What the document covers
@@ -59,7 +59,7 @@ Each member selected one document from Canvas (e.g., STM32F3 datasheet, STM32 HA
 
 ---
 
-## 6. 🧪 Lab Tasks Completed (Week 1)
+## 6. Lab Tasks Completed (Week 1)
 
 | Task                                                      | Outcome |
 |-----------------------------------------------------------|---------|
@@ -72,7 +72,7 @@ Each member selected one document from Canvas (e.g., STM32F3 datasheet, STM32 HA
 
 ---
 
-## 7. 🧾 Action Items for Next Week
+## 7. Action Items for Next Week
 
 | Task                                          | Owner       | Due |
 |-----------------------------------------------|-------------|-----|
@@ -84,9 +84,9 @@ Each member selected one document from Canvas (e.g., STM32F3 datasheet, STM32 HA
 
 ---
 
-## 8. ✅ Week 1 Checklist Summary
+## 8. Week 1 Checklist Summary
 
-- [x] Group formed, group name chosen
+- [x] Group formed
 - [x] All members inducted and have GitHub access
 - [x] GitHub repository created (private)
 - [x] IDE installed and tested
@@ -96,7 +96,7 @@ Each member selected one document from Canvas (e.g., STM32F3 datasheet, STM32 HA
 
 ---
 
-**📌 Next Meeting:** Week 2 Lab (06/03/2025) 
-**📥 Minutes saved in repo as:** `minutes_27_2.txt`
+**Next Meeting:** Week 2 Lab (06/03/2025) 
+**Minutes saved in repo as:** `/minutes/minutes_27_2.txt`
 
 
