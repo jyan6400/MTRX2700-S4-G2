@@ -98,6 +98,6 @@ The project processes a user-provided string and:
 ### Build & Flash:
 1. Clone the repo and open with STM32CubeIDE:
    ```bash
-   git clone https://github.com/[your-org]/MTRX2700-S4-G2.git
+   git clone [https://github.com/jyan6400/MTRX2700-S4-G2.git]
 
 
