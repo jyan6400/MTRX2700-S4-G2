@@ -72,19 +72,47 @@ palindrome_initialise:
     SUB R6, #1          		@ Right pointer
 
     MOV R1, #0              	@ Left pointer
+
 check_palindrome:
-    CMP R1, R6
-    BGE encode_initialise         	@ If all letters are found then encode
+    CMP R1, R6					@ If pointers have met it must be a palindrome
+    BGE encode_initialise
 
+@ Skip non-letter characters from left pointer
+skip_left:
     LDRB R5, [R4, R1]
-    LDRB R3, [R4, R6]
-    CMP R5, R3					@ Compare charcaters
-    BNE reset               	@ If a character doesn't match, not palindrome
+    CMP R5, #'a'
+    BLT increase_left				@ If it is not a letter then increment the left pointer
+    CMP R5, #'z'
+    BLE check_right				@ If it's a letter then check the right pointer
 
-	@ Increase left pointer and decrease right pointer
+increase_left:
+    ADD R1, #1					@ Increase left pointer
+    CMP R1, R6
+    BGT encode_initialise		@ If pointers have met then must be a palindrome
+    B skip_left
+
+@ Skip non-letter characters from the right pointer
+check_right:
+    LDRB R3, [R4, R6]
+    CMP R3, #'a'
+    BLT decrease_right			@ If it is not a letter then increment the right pointer
+    CMP R3, #'z'
+    BLE compare_chars			@ If it is a letter then compare them
+
+decrease_right:
+    SUB R6, #1				    @ Decrease right pointer
+    CMP R1, R6
+    BGT encode_initialise	   	@ If pointers have met then must be a palindrome
+    B check_right
+
+compare_chars:
+    CMP R5, R3
+    BNE reset				   	@ If characters do not match then reset
+
+    @ Change pointers
     ADD R1, #1
     SUB R6, #1
-    B check_palindrome
+    B check_palindrome		   	@ Loop to keep checking characters
 
 encode_initialise:
 	@ Establish string length and current index counter
