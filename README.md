@@ -8,11 +8,11 @@
 
 ### Group Members & Roles
 
-| Name           | Role                         | Responsibilities                                                                 |
-|----------------|------------------------------|----------------------------------------------------------------------------------|
-| Oscar          | Systems & Comms Lead         | String manipulation, UART communication, integration of input/output logic      |
-| Jiaze          | I/O & Control Lead           | LED bitmasking, button interfacing, timer configuration, PWM and delays         |
-| Jason          | DevOps & Architecture Lead   | Repository structure, documentation, Git integration, assembly debugging support, **Meeting Minutes**|
+| Name           | Role                         | Responsibilities                                                                                         |
+|----------------|------------------------------|----------------------------------------------------------------------------------------------------------|
+| Oscar          | Systems & Comms Lead         | String manipulation, UART communication, integration of input/output logic                               |
+| Jiaze          | I/O & Control Lead           | LED bitmasking, button interfacing, timer configuration, PWM and delays                                  |
+| Jason          | DevOps & Architecture Lead   | Repository structure, documentation, Git integration, assembly debugging support, **Meeting Minutes**    |
 
 ---
 
@@ -35,33 +35,32 @@ The repo is structured by **lab week and exercise number**, as per the official 
 
 /Weekly Labs/
 ├── 1.3.2/           # String manipulation functions
-│   └── 1.3.2a.s     # Uppercase/lowercase conversion
-│   └── 1.3.2b.s     # Palindrome checker
-│   └── 1.3.2c.s     # Caesar cipher
+│   └── 1.3.2a.s         # Uppercase/lowercase conversion
+│   └── 1.3.2b.s         # Palindrome checker
+│   └── 1.3.2c.s         # Caesar cipher
 │
 ├── 1.4.2/           # LED control with bitmasking and button input
-│   └── 1.4.2a.s     # Bitmask LED pattern
-│   └── 1.4.2b.s     # Button-driven LED toggle
-│   └── 1.4.2c.s     # Vowel/consonant LED display
+│   └── 1.4.2a.s         # Bitmask LED pattern
+│   └── 1.4.2b.s         # Button-driven LED toggle
+│   └── 1.4.2c.s         # Vowel/consonant LED display
 │
 ├── 1.5.2/           # UART communication modules
-│   └── uart_send.s
-│   └── uart_receive.s
-│   └── uart_bridge.s
+│   └── 1.5.2a.s         # UART Transmission on Button Press
+│   └── 1.5.2b.s         # UART Receive Until Terminating Character
+│   └── 1.5.2c.s         # Changing Clock Speed & Updating Baud Rate
+|   └── 1.5.2d.s         # UART Read & Retransmit
+|   └── 1.5.2e.s         # UART Port Forwarding (PC --> MCU1 --> MCU2)
 │
 ├── 1.6.2/           # Timer-based delay functions and PWM
-│   └── delay_timer.s
-│   └── pwm_loop.s
-│   └── initialise.s
+│   └── 1.6.2a.s         # Hardware Timer-Based Delay Function
+│   └── 1.6.2b.s         # Presclaer Seeldction and 0.1ms Demonstration Using TIM2
+│   └── 1.6.2c.s         # Using Preload (ARR + ARPE) for Accurate Hardware Delay
 │
 ├── 1.7.2/           # Final integration project
-│   └── integration_main.s   # Combines UART, logic, LEDs, timers
+│   └── 1.7.2a.s         # Combines UART, logic, LEDs, timers
 │
 ├── Week 1 Code/     # Introductory assembly examples
-│   └── assembly.s
-│   └── first_timer_test.s
-
-
+|
 
 ---
 
@@ -77,13 +76,13 @@ The project processes a user-provided string and:
    - Blinks **LEDs accordingly** with a 500ms delay between each character group
 
 ### Modules:
-| Module        | Description                                                                 |
-|---------------|-----------------------------------------------------------------------------|
-| `string_utils`| Handles character case conversion, palindrome check, and Caesar encryption |
-| `uart_comm`   | UART send/receive drivers with polling                                      |
-| `led_control` | Controls GPIOE output based on character counts                             |
-| `timer_util`  | Implements delays and PWM control using TIM2                               |
-| `integration_main` | Combines all modules in a final working system                        |
+| Module             | Description                                                                 |
+|--------------------|-----------------------------------------------------------------------------|
+| `string_utils`     | Handles character case conversion, palindrome check, and Caesar encryption  |
+| `uart_comm`        | UART send/receive drivers with polling                                      |
+| `led_control`      | Controls GPIOE output based on character counts                             |
+| `timer_util`       | Implements delays and PWM control using TIM2                                |
+| `integration_main` | Combines all modules in a final working system                              |
 
 ---
 
@@ -96,6 +95,6 @@ The project processes a user-provided string and:
 - Jumper wires (for UART connection between boards)
 
 ### Instructions:
-1. Copy and paste assembly code into relevant project template. Changes to the "initialise.s" and "definition.s" templates have been uploaded on the repository
+1. Copy and paste assembly code into relevant project template in STM32CubeIDE. Changes to the "initialise.s" and "definition.s" templates have been uploaded on the repository and should also be pasted into their respective files in the project template accordingly
 
 
