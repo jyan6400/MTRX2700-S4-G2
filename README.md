@@ -95,9 +95,7 @@ The project processes a user-provided string and:
 - Micro-USB cable
 - Jumper wires (for UART connection between boards)
 
-### Build & Flash:
-1. Clone the repo and open with STM32CubeIDE:
-   ```bash
-   git clone [https://github.com/jyan6400/MTRX2700-S4-G2.git]
+### Instructions:
+1. Copy and paste assembly code into relevant project template. Changes to the "initialise.s" and "definition.s" templates have been uploaded on the repository
 
 
