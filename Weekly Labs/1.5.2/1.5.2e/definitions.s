@@ -11,6 +11,9 @@
 .equ RCC_CFGR, 0x04 @ configure clock register
 
 
+.equ ODR, 0x14	@ GPIO output register
+.equ IDR, 0x10	@ GPIO input register
+
 @ specific base address for the desired UART to use
 @  find this in the peripheral register memory boundary in the big manual
 .equ UART, 0x40013800
@@ -70,6 +73,9 @@
 .equ PLLEN, 16 @ enable the PLL clock
 .equ PLLSRC, 16
 .equ USBPRE, 22 @ with PLL active, this must be set for the USB
+
+.equ PWREN, 28
+.equ SYSCFGEN, 0
 
 .equ PWREN, 28
 .equ SYSCFGEN, 0
