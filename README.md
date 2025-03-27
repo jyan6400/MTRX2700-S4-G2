@@ -33,6 +33,8 @@ The goal is to demonstrate modular, low-level embedded development using:
 
 The repo is structured by **lab week and exercise number**, as per the official lab manual.
 
+![Lab Structure](images/Structure.png)
+
 /Weekly Labs/
 ├── 1.3.2/           # String manipulation functions
 │   └── 1.3.2a.s         # Uppercase/lowercase conversion
