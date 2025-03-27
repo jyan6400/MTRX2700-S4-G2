@@ -60,10 +60,7 @@ The repo is structured by **lab week and exercise number**, as per the official 
 │
 ├── 1.7.2/           # Final integration project
 │   └── 1.7.2a.s         # Combines UART, logic, LEDs, timers
-│
-├── Week 1 Code/     # Introductory assembly examples
 |
-
 ---
 
 ## Program Overview
