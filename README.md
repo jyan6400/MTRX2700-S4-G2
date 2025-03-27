@@ -97,4 +97,6 @@ The project processes a user-provided string and:
 ### Instructions:
 1. Copy and paste assembly code into relevant project template in STM32CubeIDE. Changes to the "initialise.s" and "definition.s" templates have been uploaded on the repository and should also be pasted into their respective files in the project template accordingly
 
+## Testing Plan
+
 
