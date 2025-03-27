@@ -1,1 +1,73 @@
+# MTRX2700 Week 5 Pre-Demo Meeting Minutes  
+Date: 27/03/2025 
+Location: Mechatronics Dry Lab 
+Group Name: S4-G2  
+Minute Taker: Jason Yang
 
+---
+
+## 1. Attendance
+
+| Name           | Present |
+|----------------|---------|
+| Oscar          | ✅     | 
+| Jiaze          | ✅     |
+| Jason          | ✅     | 
+
+---
+
+## 2. Objective of the Week
+
+- Finish **Exercise 5: Full System Integration**
+- Connect and verify serial interface between two STM32 boards
+- Route received string through processing pipeline:
+  - Palindrome check
+  - Caesar cipher (if required)
+  - Vowel/consonant count → LED output with timer-based delays
+- Demo Preparation
+
+---
+
+## 3. Progress Checklist
+
+| Integration Component                    | Status | Owner     | Notes                                                                 |
+|------------------------------------------|--------|-----------|-----------------------------------------------------------------------|
+| UART bridging between two boards         | ✅     | Oscar     | Board A ↔ Board B communication working via UART4/5                   |
+| Integration of string input & processing | ✅     | Oscar     | Palindrome/cipher logic functional but not fully routed from UART     |
+| LED display of vowel/consonant count     | ✅     | Jiaze     | LED toggle logic and timer loop set up; testing in progress           |
+| Shared memory coordination               | ✅     | Jason     | Correct string pointers defined; tested across modules                |
+| Button trigger for next word             | ✅     | Jiaze     | Implementation started, needs integration with timer loop             |
+| Initial system testing (combined modules)| ✅     | All       | Partial test passed, LED logic not fully synced with UART yet         |
+
+---
+
+## 4. Issues Encountered
+
+| Issue                                         | Discussion / Resolution                                             |
+|-----------------------------------------------|----------------------------------------------------------------------|
+| Multiple modules accessing same memory        | Separated buffer space and clarified register handoff strategy      |
+| LED PWM blinking overlaps with UART receive   | Will stagger UART read + LED update with software handshaking       |
+| Button not triggering repeat loop properly    | Suspect debounce or flag logic issue; to debug in next session      |
+| Presentation date too early for full polish   | Scheduled **extra meeting before Week 5 demo** to complete testing  |
+
+---
+
+## 5. Repository Updates
+
+| Folder                       | Updates Made                               | Notes                                       |
+|------------------------------|--------------------------------------------|---------------------------------------------|
+| `1.7.2/`                     | `1.7.2a` updated                           | Core integration file with shared functions |
+| `1.3.2/`, `1.4.2/`, `1.6.2/` | Updated and imported modules               | Modular design used for import and linking  |
+| `minutes/`                   | `minutes_27_3.txt` added                   | This meeting record                         |
+
+---
+
+## 6. Group Reflections
+
+- Team communicated well and clearly divided tasks
+- Early modular design helped isolate and debug logic
+- All core logic has been complete before Demo
+
+---
+ 
+**Minutes saved in repo as:** `minutes/minutes_27_3.txt`
