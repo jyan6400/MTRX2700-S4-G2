@@ -72,10 +72,10 @@ The project processes a user-provided string and:
 ## Testing Plan
 
 ### Modules:
-| Module             | Testing                                                                 |
+| Module             | Testing                                                                     |
 |--------------------|-----------------------------------------------------------------------------|
-| `string_utils`     | Check different palindromes, strings as well as decode and encode function
-                       of caesar cypher                                                            |
+| `string_utils`     | Check different palindromes, strings as well as decode and encode function  |
+                     |  of caesar cypher                                                           |
 | `uart_comm`        | UART send/receive drivers with polling                                      |
 | `led_control`      | Controls GPIOE output based on character counts                             |
 | `timer_util`       | Implements delays and PWM control using TIM2                                |
