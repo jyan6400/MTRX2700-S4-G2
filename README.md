@@ -35,33 +35,6 @@ The repo is structured by **lab week and exercise number**, as per the official 
 
 ![Lab Structure](Structure.png)
 
-/Weekly Labs/
-├── 1.3.2/           # String manipulation functions
-│   └── 1.3.2a.s         # Uppercase/lowercase conversion
-│   └── 1.3.2b.s         # Palindrome checker
-│   └── 1.3.2c.s         # Caesar cipher
-│
-├── 1.4.2/           # LED control with bitmasking and button input
-│   └── 1.4.2a.s         # Bitmask LED pattern
-│   └── 1.4.2b.s         # Button-driven LED toggle
-│   └── 1.4.2c.s         # Vowel/consonant LED display
-│
-├── 1.5.2/           # UART communication modules
-│   └── 1.5.2a.s         # UART Transmission on Button Press
-│   └── 1.5.2b.s         # UART Receive Until Terminating Character
-│   └── 1.5.2c.s         # Changing Clock Speed & Updating Baud Rate
-|   └── 1.5.2d.s         # UART Read & Retransmit
-|   └── 1.5.2e.s         # UART Port Forwarding (PC --> MCU1 --> MCU2)
-│
-├── 1.6.2/           # Timer-based delay functions and PWM
-│   └── 1.6.2a.s         # Hardware Timer-Based Delay Function
-│   └── 1.6.2b.s         # Presclaer Seeldction and 0.1ms Demonstration Using TIM2
-│   └── 1.6.2c.s         # Using Preload (ARR + ARPE) for Accurate Hardware Delay
-│
-├── 1.7.2/           # Final integration project
-│   └── 1.7.2a.s         # Combines UART, logic, LEDs, timers
-|
----
 
 ## Program Overview
 
