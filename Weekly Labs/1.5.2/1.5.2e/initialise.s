@@ -3,7 +3,13 @@
 
 #include "definitions.s"
 
+enable_timer2_clock:
 
+    LDR R0, =RCC              @ Load RCC base address
+    LDR R1, [R0, #APB1ENR]    @ Read RCC_APB1ENR register
+    ORR R1, R1, #(1 << TIM2EN)  @ Set the TIM2EN bit
+    STR R1, [R0, #APB1ENR]    @ Write back to enable TIM2
+    BX LR
 
 @ function to enable the clocks for the peripherals we could be using (A, B, C, D and E)
 enable_peripheral_clocks:
@@ -114,57 +120,14 @@ enable_usart2:
 
 	BX LR @ return
 
-
-
-@ set the PLL (clocks are described in page 125 of the large manual)
-change_clock_speed:
-@ step 1, set clock to HSE (the external clock)
-	@ enable HSE (and wait for complete)
-	LDR R0, =RCC @ the base address for the register to turn clocks on/off
-	LDR R1, [R0, #RCC_CR] @ load the original value from the enable register
-	LDR R2, =1 << HSEBYP | 1 << HSEON @ make a bit mask with a '1' in the 0th bit position
-	ORR R1, R2 @ apply the bit mask to the previous values of the enable register
-	STR R1, [R0, #RCC_CR] @ store the modified enable register values back to RCC
-
-	@ wait for the changes to be completed
-wait_for_HSERDY:
-	LDR R1, [R0, #RCC_CR] @ load the original value from the enable register
-	TST R1, 1 << HSERDY @ Test the HSERDY bit (check if it is 1)
-	BEQ wait_for_HSERDY
-
-@ step 2, now the clock is HSE, we are allowed to switch to PLL
-	@ clock is set to External clock (external crystal) - 8MHz, can enable the PLL now
-	LDR R1, [R0, #RCC_CFGR] @ load the original value from the enable register
-	LDR R2, =1 << 20 | 1 << PLLSRC | 1 << 22 @ the last term is for the USB prescaler to be 1
-	ORR R1, R2  @ set PLLSRC (use PLL) and PLLMUL to 0100 - bit 20 is 1 (set speed as 6x faster)
-				@ see page 140 of the large manual for options
-				@ NOTE: cannot go faster than 72MHz)
-	STR R1, [R0, #RCC_CFGR] @ store the modified enable register values back to RCC
-
-	@ enable PLL (and wait for complete)
-	LDR R0, =RCC @ the base address for the register to turn clocks on/off
-	LDR R1, [R0, #RCC_CR] @ load the original value from the enable register
-	ORR R1, 1 << PLLON @ apply the bit mask to turn on the PLL
-	STR R1, [R0, #RCC_CR] @ store the modified enable register values back to RCC
-
-wait_for_PLLRDY:
-	LDR R1, [R0, #RCC_CR] @ load the original value from the enable register
-	TST R1, 1 << PLLRDY @ Test the HSERDY bit (check if it is 1)
-	BEQ wait_for_PLLRDY
-
-@ step 3, PLL is ready, switch over the system clock to PLL
-	LDR R0, =RCC  @ load the address of the RCC address boundary (for enabling the IO clock)
-	LDR R1, [R0, #RCC_CFGR]  @ load the current value of the peripheral clock registers
-	MOV R2, 1 << 10 | 1 << 1  @ some more settings - bit 1 (SW = 10)  - PLL set as system clock
-									   @ bit 10 (HCLK=100) divided by 2 (clock is faster, need to prescale for peripherals)
-	ORR R1, R2	@ Set the values of these two clocks (turn them on)
-	STR R1, [R0, #RCC_CFGR]  @ store the modified register back to the submodule
-
-	LDR R1, [R0, #RCC_CFGR]  @ load the current value of the peripheral clock registers
-	ORR R1, 1 << USBPRE	@ Set the USB prescaler (when PLL is on for the USB)
-	STR R1, [R0, #RCC_CFGR]  @ store the modified register back to the submodule
-
-	BX LR @ return
+@ initialise the discovery board I/O (just outputs: inputs are selected by default)
+initialise_discovery_board:
+	LDR R0, =GPIOE 	@ load the address of the GPIOE register into R0
+	LDR R1, =0x5555  @ load the binary value of 01 (OUTPUT) for each port in the upper two bytes
+					 @ as 0x5555 = 01010101 01010101
+	STRH R1, [R0, #GPIO_MODER + 2]   @ store the new register values in the top half word representing
+								@ the MODER settings for pe8-15
+	BX LR @ return from function call
 
 
 
